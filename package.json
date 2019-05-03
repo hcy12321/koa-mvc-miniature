@@ -1,0 +1,29 @@
+{
+  "name": "koa-mvc-miniature",
+  "version": "1.0.0",
+  "description": "A framework for simple implementation of the MVC prototype using koa.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:hcy12321/koa-mvc-miniature.git"
+  },
+  "keywords": [
+    "koa",
+    "demo",
+    "miniature"
+  ],
+  "author": "york",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "mime": "^2.4.2",
+    "mz": "^2.7.0",
+    "nunjucks": "^3.2.0"
+  }
+}
