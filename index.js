@@ -19,11 +19,12 @@ async function main() {
         }
     });
 
-    let routerFunc = (ctx, next, controller) => {
+    let routerFunc = async (ctx, next, controller) => {
         try {
-            if (!ctx.params.name) ctx.params.name = 'index';
+            if (!ctx.params.name) ctx.params.name = Config.defaultFuncName;
             if (ctx.params.name[0] !== '_' && controller[ctx.params.name]) {
                 let ret = controller[ctx.params.name](ctx);
+                if (ret instanceof Promise) ret = await ret;
                 if (ret) ctx.response.body = ret;
             }
         } catch(e) {
