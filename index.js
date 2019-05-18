@@ -4,6 +4,7 @@ const Koa = require('koa');
 const router = require('koa-router')();
 const path = require('path');
 const koaStatic = require('koa-static');
+const bodyPaser = require('koa-bodyparser');
 const controllerMgr = require('./lib/controller_manager');
 const viewMgr = require('./lib/view_manager');
 
@@ -38,6 +39,7 @@ async function main() {
     await controllerMgr.init(dir);
 
     app.use(koaStatic(path.join(__dirname, 'static')));
+    app.use(bodyPaser());
     app.use(router.routes());
     
     const port = Config.port || 3000;
