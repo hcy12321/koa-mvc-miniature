@@ -4,20 +4,17 @@ const Koa = require('koa');
 const router = require('koa-router')();
 const path = require('path');
 const koaStatic = require('koa-static');
-const bodyPaser = require('koa-bodyparser');
+const bodyParser = require('koa-bodyparser');
 const controllerMgr = require('./lib/controller_manager');
 const viewMgr = require('./lib/view_manager');
+const dataMgr = require('./lib/data_manager');
 
 async function main() {
     const app = new Koa();
+    await dataMgr.init();
     const logger = await logMgr.getLogger('server');
     viewMgr.createEnv(path.join(__dirname, 'views'), {
-        watch: true,
-        filters: {
-            hex: function (n) {
-                return '0x' + n.toString(16);
-            }
-        }
+        watch: true
     });
 
     let routerFunc = async (ctx, next, controller) => {
@@ -31,15 +28,15 @@ async function main() {
         } catch(e) {
             logger.error(`get process err: ${e.stack}`);
         }
-        next();
+        await next();
     }
     let dir = path.join(__dirname, 'controllers');
     controllerMgr.setRouter(router);
     controllerMgr.setRouterFunc(routerFunc);
     await controllerMgr.init(dir);
 
+    app.use(bodyParser());
     app.use(koaStatic(path.join(__dirname, 'static')));
-    app.use(bodyPaser());
     app.use(router.routes());
     
     const port = Config.port || 3000;

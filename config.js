@@ -4,5 +4,7 @@ module.exports = {
     defaultFuncName: 'index',
     logDir: `${__dirname}/log`,
     logWriteInterval: 500,
-    logOpenConsole: true
+    logOpenConsole: true,
+    logOpenFileLine: true,
+    logOpenFilePath: true
 };
